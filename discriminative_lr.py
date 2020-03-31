@@ -2,8 +2,9 @@ from typing import Union
 import torch
 import torch.nn as nn
 
+__all__ = ['discriminative_lr_optimizer']
 
-def discrimative_lr_optimizer(network: nn.Module, lr: Union[float, list], optimizer: torch.optim, **kwargs):
+def discriminative_lr_optimizer(network: nn.Module, lr: Union[float, list], optimizer: torch.optim, **kwargs):
     '''
     Returns the optimizer with discriminative learning rates for each children on the network,
     if the number of children is different of the number of learning rates, the range
