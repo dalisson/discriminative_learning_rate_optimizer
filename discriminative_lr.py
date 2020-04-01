@@ -4,7 +4,7 @@ import torch.nn as nn
 
 __all__ = ['discriminative_lr_optimizer']
 
-def discriminative_lr_optimizer(network: nn.Module, lr: Union[float, list], optimizer: torch.optim, **kwargs):
+def discriminative_lr_optimizer(network: Union[nn.Module, list], lr: Union[float, list], optimizer: torch.optim, **kwargs):
     '''
     Returns the optimizer with discriminative learning rates for each children on the network,
     if the number of children is different of the number of learning rates, the range
@@ -21,7 +21,10 @@ def discriminative_lr_optimizer(network: nn.Module, lr: Union[float, list], opti
     return
         torch.optim.optimizer
     '''
-    model_children = list(network.children())
+    if isinstance(network, list):
+        model_children = [c.children() for c in network]
+    else:
+        model_children = list(network.children())
     n_groups = len(model_children)
     if isinstance(lr, list):
         #if there is a different number of learning rates and param groups in model
