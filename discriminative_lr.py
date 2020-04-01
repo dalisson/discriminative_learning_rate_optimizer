@@ -22,7 +22,7 @@ def discriminative_lr_optimizer(network: Union[nn.Module, list], lr: Union[float
         torch.optim.optimizer
     '''
     if isinstance(network, list):
-        model_children = [c.children() for c in network]
+        model_children = [c for item in network for c in item.children()]
     else:
         model_children = list(network.children())
     n_groups = len(model_children)
